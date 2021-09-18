@@ -1,5 +1,11 @@
 package sort;
 
+import java.util.*;
+
+/*
+ Sorter class utilizes four different sort methods to sort int arrays
+ */
+
 public class Sorter 
 {
 	//MERGESORT
@@ -152,6 +158,65 @@ public class Sorter
 				i--;
 				a[i+1] = key;
 			}
+		}
+	}
+
+	
+	/*
+	 Main method creates four arrays with the same size (100000) and contents and sorts them using all four methods
+	 It then times how long each method takes and compares the times at the end to see which one is the fastest
+	 */
+	public static void main (String[] args)
+	{
+		int[] test = new int[100000];
+		Random gen = new Random();
+		for(int i = 0; i < test.length - 1; i++)
+		{
+			test[i] = gen.nextInt(1000);
+		}
+		int[] test2 = test.clone();
+		int[] test3 = test.clone();
+		int[] test4 = test.clone();
+		
+		long startTime = System.nanoTime();
+		mergeSort(test, 0, test.length-1);
+		long endTime = System.nanoTime();
+		long MSRunningTime = endTime - startTime;
+		System.out.println("MergeSort Running Time: " + MSRunningTime + " nano seconds");
+
+		startTime = System.nanoTime();
+		quickSort(test2, 0, test2.length-1);
+		endTime = System.nanoTime();
+		long QSRunningTime = endTime - startTime;
+		System.out.println("QuickSort Running Time: " + QSRunningTime + " nano seconds");
+
+		startTime = System.nanoTime();
+		heapSort(test3);
+		endTime = System.nanoTime();
+		long HSRunningTime = endTime - startTime;
+		System.out.println("HeapSort Running Time: " + HSRunningTime + " nano seconds");
+		
+		startTime = System.nanoTime();
+		insertionSort(test4);
+		endTime = System.nanoTime();
+		long ISRunningTime = endTime - startTime;
+		System.out.println("InsertionSort Running Time: " + ISRunningTime + " nano seconds");
+
+		if(MSRunningTime < QSRunningTime && MSRunningTime < HSRunningTime && MSRunningTime < ISRunningTime)
+		{
+			System.out.print("MergeSort was fastest");
+		}
+		else if(QSRunningTime < HSRunningTime && QSRunningTime < ISRunningTime)
+		{
+			System.out.print("QuickSort was fastest");
+		}
+		else if(HSRunningTime < ISRunningTime)
+		{
+			System.out.print("HeapSort was fastest");
+		}
+		else
+		{
+			System.out.print("InsertionSort was fastest");
 		}
 	}
 
